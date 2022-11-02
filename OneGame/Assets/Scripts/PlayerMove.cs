@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
     private float _oldMousePositionX;
     private float _eulerY;
 
     // Скрипт управления игроком
-    void Start()
-    {
-        
-    }
-        
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             _oldMousePositionX = Input.mousePosition.x;
+            _animator.SetBool("Run", true);
         }
 
         if (Input.GetMouseButton(0))
@@ -34,7 +32,12 @@ public class PlayerMove : MonoBehaviour
             _eulerY += deltaX;
             _eulerY = Mathf.Clamp(_eulerY, -70, 70);
             transform.eulerAngles = new Vector3(0, _eulerY, 0);
-        }       
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            _animator.SetBool("Run", false);
+        }
 
 
     }
